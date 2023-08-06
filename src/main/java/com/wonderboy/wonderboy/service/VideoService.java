@@ -15,6 +15,7 @@ public class VideoService {
 
     public ResponseEntity<Video> editVideo(VideoDto videoDto ){
 
+
     Video video  =  videoRepo.findById(videoDto.getId()).orElseThrow(()->
                 new IllegalArgumentException("Cannot find the video "));
 
@@ -28,6 +29,27 @@ public class VideoService {
 
     videoRepo.save(video);
     return new ResponseEntity<>(video, HttpStatus.OK);
+    }
+
+
+
+
+    public  VideoDto getVideoDetails(String videoId){
+
+        Video video =  videoRepo.findById(videoId).orElseThrow(()->new IllegalArgumentException("video Not Found"));
+
+        VideoDto videoDto = new VideoDto();
+
+        videoDto.setVideoUrl(video.getVideoUrl());
+        videoDto.setThumbnail(video.getThumbnailUrl());
+        videoDto.setVideoStatus(video.getVideoStatus());
+        videoDto.setTitle(video.getTitle());
+        videoDto.setDescription(video.getDescription());
+        videoDto.setTags(video.getTags());
+        videoDto.setId(video.getId());
+
+
+        return videoDto ;
     }
 
 

@@ -27,18 +27,28 @@ public class VideoController {
     @PostMapping("/upload")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-
         return new ResponseEntity<>(storageService.uploadFile(file),HttpStatus.OK) ;
-
     }
 
+
+    @PostMapping("/thumbnail")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> uploadThumbnail(@RequestParam("file") MultipartFile file
+        ,@RequestParam("videoId") String videoId) throws IOException {
+        return new ResponseEntity<>(storageService.uploadFile(file),HttpStatus.OK) ;
+    }
 
     @PutMapping("/upload")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Video> editVideoMetaData(@RequestBody VideoDto videoDto){
-
-
         return videoService.editVideo(videoDto) ;
+    }
+
+
+    @GetMapping("/video/{videoId}")
+    public VideoDto getVideoDetails(@PathVariable String videoId ){
+
+        return  videoService.getVideoDetails(videoId);
 
     }
 

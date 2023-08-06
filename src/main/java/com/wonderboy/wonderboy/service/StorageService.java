@@ -7,6 +7,8 @@ import com.wonderboy.wonderboy.model.Video;
 import com.wonderboy.wonderboy.repo.VideoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,7 @@ public class StorageService {
     @Autowired
     private VideoRepo videoRepo ;
 
+
     public  String uploadFile(MultipartFile file) throws FileNotFoundException {
 
 
@@ -41,7 +44,21 @@ public class StorageService {
         videoRepo.save(video) ;
         fileObject.delete() ;
 
-        return  "File Uploaded "+ fileName ;
+        return  video.getId() ;
+
+    }
+
+    public ResponseEntity<String> uploadThumbnail(MultipartFile file , String videoId) throws FileNotFoundException {
+
+    Video video = videoRepo.findById(videoId).orElseThrow(()->
+            new IllegalArgumentException("video don't existe"));
+
+        String thubnailUrl = uploadFile(file);
+         video.setThumbnailUrl(thubnailUrl);
+
+
+        return  new ResponseEntity<>(thubnailUrl, HttpStatus.OK) ;
+
 
     }
 
