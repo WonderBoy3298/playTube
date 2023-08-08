@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-@RestController @CrossOrigin("*")
+@RestController
 public class VideoController {
 
 
@@ -40,8 +40,10 @@ public class VideoController {
 
     @PutMapping("/upload")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Video> editVideoMetaData(@RequestBody VideoDto videoDto){
+    public ResponseEntity<Video> editVideo(@RequestBody VideoDto videoDto){
+
         return videoService.editVideo(videoDto) ;
+
     }
 
 
@@ -50,6 +52,11 @@ public class VideoController {
 
         return  videoService.getVideoDetails(videoId);
 
+    }
+
+    @GetMapping("/test")
+    public String test(){
+        return "this is a test route " ;
     }
 
 
