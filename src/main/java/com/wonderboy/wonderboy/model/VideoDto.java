@@ -16,4 +16,7 @@ public class VideoDto {
     private  String videoUrl  ;
     private  VideoStatus videoStatus ;
     private  String thumbnail ;
+    private Integer dislikeCount;
+    private Integer likeCount  ;
+    private Integer viewCount;
 }
